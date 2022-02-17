@@ -1,0 +1,18 @@
+# This needs to be run like:
+#
+# . ./activate-virtualenv
+
+SCRIPTDIR="$( cd "$(dirname "$0")" ; pwd -P )"
+
+cd "$SCRIPTDIR"
+
+VENVDIR=".venv"
+
+if ! [ -d "$VENVDIR" ]; then
+  python3 -m venv "$VENVDIR"
+  . "$VENVDIR/bin/activate"
+  pip install --upgrade pip
+else
+. "$VENVDIR/bin/activate"
+fi
+

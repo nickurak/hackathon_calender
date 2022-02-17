@@ -28,3 +28,13 @@ def get_calendars():
                 'url': url
             }
 
+
+def write_calendars(calendars):
+    with open("calendars.json", "w") as outfile:
+        json.dump(calendars, outfile)
+        outfile.write("\n")
+
+def write_events(events):
+    with open("events.json", "w") as outfile:
+        json.dump(events, outfile)
+        outfile.write("\n")

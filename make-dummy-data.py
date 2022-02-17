@@ -2,6 +2,8 @@
 
 import json
 
+from db import write_calendars, write_events
+
 sample_registered_calendars = [
     {
         'name': 'hackathon test calendar',
@@ -23,13 +25,8 @@ sample_events = [
 
 
 def main():
-    with open("calendars.json", "w") as outfile:
-        json.dump(sample_registered_calendars, outfile)
-        outfile.write("\n")
-
-    with open("events.json", "w") as outfile:
-        json.dump(sample_events, outfile)
-        outfile.write("\n")
+    write_calendars(sample_registered_calendars)
+    write_events(sample_events)
 
 if __name__ == '__main__':
     main()

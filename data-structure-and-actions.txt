@@ -1,0 +1,44 @@
+Bot will store
+
+registered_calendars:
+
+[ { "name": <string>,
+  "url": <string },
+  { ...}
+}
+
+known_events:
+
+[ { "calendar_name": <string>,
+    "event_name": <string>,
+    "start_time": <UTC time stamp, seconds since 19970>,
+    "end_time": <UTC time stamp>
+  }
+]
+
+
+
+Operations the bot needs to do:
+
+When asked about calenders:
+- iterate registered calendars
+- return that list
+
+When asked about events (with optional filters: selected_ calendar, and time_range)
+- iterate known_events
+  - if selected_calendar is set, and the event isn't on that calendar, ignore it
+  - if time_range is set, and the event doesn't overlap that time_range, ignore it
+- return that list
+
+
+Refresh calendar data:
+
+- iterate registered calendars
+- delete events that are in known_events that aren't found any more
+  - call a notification function to react to those deletions
+- add new events to known_events
+  - call a notification function to react to those new events:
+
+
+
+

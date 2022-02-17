@@ -14,6 +14,7 @@ sample_registered_calendars = [
 sample_events = [
     {
         'uid': 'some fake uid',
+        'calendar': 'hackathon test calendar',
         'event_name': 'test event',
         'start_time': 1645124381,
         'end_time': 1645124989

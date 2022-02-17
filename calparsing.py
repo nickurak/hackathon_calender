@@ -1,17 +1,25 @@
 import requests
 from icalendar import Calendar, Event
+from db import get_calendars, write_events
+from datetime import timezone
 
-URL = "https://calendar.google.com/calendar/ical/c_adghr2e0nnjq9ve4a408lh8dc4%40group.calendar.google.com/public/basic.ics"
+events = []
+for calendar in get_calendars():
+        name = calendar['name']
+        url = calendar['url']
 
-r = requests.get(url = URL)
+        r = requests.get(url = calendar['url'])
 
-print ("Status Code:", r.status_code)
+        gcal = Calendar.from_ical(r.text)
 
-gcal = Calendar.from_ical(r.text)
-
-for component in gcal.walk():
-  if component.name == "VEVENT":
-        print("Summary:",component.get('summary'))
-        print("Date Start:",component.get('dtstart').dt)
-        print("Date End:",component.get('dtend').dt)
-        print("Date Stamp:",component.get('dtstamp').dt)
+        for component in gcal.walk():
+          if component.name == "VEVENT":
+            event = {}
+            event['calendar'] = calendar['name']
+            event['event_name'] = component.get('summary')
+            event['uid'] = component.get('uid')
+            event['start_time'] = component.get('dtstart').dt.replace(tzinfo=timezone.utc).timestamp()
+            event['end_time'] = component.get('dtend').dt.replace(tzinfo=timezone.utc).timestamp()
+            events.append(event)
+          
+        write_events(events)

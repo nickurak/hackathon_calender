@@ -24,8 +24,11 @@ sample_events = [
 def main():
     with open("calendars.json", "w") as outfile:
         json.dump(sample_registered_calendars, outfile)
+        outfile.write("\n")
+
     with open("events.json", "w") as outfile:
         json.dump(sample_events, outfile)
+        outfile.write("\n")
 
 if __name__ == '__main__':
     main()

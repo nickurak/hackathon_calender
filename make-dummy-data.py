@@ -2,18 +2,23 @@
 
 import json
 
-sample_registered_calendars = {
-    'name': 'hackathon test calendar',
-    'url': 'https://calendar.google.com/calendar/ical/c_adghr2e0nnjq9ve4a408lh8dc4%40group.calendar.google.com/public/basic.ics',
-}
+sample_registered_calendars = [
+    {
+        'name': 'hackathon test calendar',
+        'url': 'https://calendar.google.com/calendar/ical/c_adghr2e0nnjq9ve4a408lh8dc4%40group.calendar.google.com/public/basic.ics',
+    }
+]
 
 
-sample_events = {
-    'uid': 'some fake uid',
-    'event_name': 'test event',
-    'start_time': 1645124381,
-    'end_time': 1645124989
-}
+
+sample_events = [
+    {
+        'uid': 'some fake uid',
+        'event_name': 'test event',
+        'start_time': 1645124381,
+        'end_time': 1645124989
+    }
+]
 
 
 def main():

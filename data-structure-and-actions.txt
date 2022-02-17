@@ -12,7 +12,8 @@ known_events:
 [ { "calendar_name": <string>,
     "event_name": <string>,
     "start_time": <UTC time stamp, seconds since 19970>,
-    "end_time": <UTC time stamp>
+    "end_time": <UTC time stamp>,
+    "uid": <string>,
   }
 ]
 
@@ -34,6 +35,7 @@ When asked about events (with optional filters: selected_ calendar, and time_ran
 Refresh calendar data:
 
 - iterate registered calendars
+- fetch and parse ICAL data
 - delete events that are in known_events that aren't found any more
   - call a notification function to react to those deletions
 - add new events to known_events

@@ -12,7 +12,8 @@ known_events:
 [ { "calendar_name": <string>,
     "event_name": <string>,
     "start_time": <UTC time stamp, seconds since 19970>,
-    "end_time": <UTC time stamp>
+    "end_time": <UTC time stamp>,
+    "uid": <string>,
   }
 ]
 

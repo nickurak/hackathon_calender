@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-from db import get_events, get_calendars
+from db import get_events, get_calendars, get_reminders
 
 def main():
     for calendar in get_calendars():
@@ -17,6 +17,12 @@ def main():
         end_time = datetime.utcfromtimestamp(event['end_time'])
         calendar = event['calendar']
         print(f"Event {name} from calendar {calendar} (with uid \"{uid}\" ), starts at {start_time} and goes until {end_time}")
+
+    for reminder in get_reminders():
+        calendar = reminder['calendar']
+        time = reminder['time']
+        channel = reminder['channel']
+        print(f"We should remind {channel} about events on {calendar} every day at {time}")
 
 if __name__ == '__main__':
     main()

@@ -2,7 +2,7 @@
 
 import json
 
-from db import write_calendars, write_events
+from db import write_calendars, write_events, write_reminders
 
 sample_registered_calendars = [
     {
@@ -23,10 +23,19 @@ sample_events = [
     }
 ]
 
+sample_reminders = [
+    {
+        'channel': '#chris-app-test',
+        'calendar': "hackathon test calendar",
+        'time': "6:00 EST"
+    }
+]
+
 
 def main():
     write_calendars(sample_registered_calendars)
     write_events(sample_events)
+    write_reminders(sample_reminders)
 
 if __name__ == '__main__':
     main()

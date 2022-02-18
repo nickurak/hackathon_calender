@@ -17,3 +17,13 @@ I saw an article that gave me some understanding about how this could be done:
 ## Questions
 
 Feel to contact me (Chris) in our slack team channel **#ddm-hackathon-universal-calendar** about any questions or any issues you encounter following tutorial linked above.
+
+# Development environment:
+
+Python supports "Virtual Enverionments" that keep all the dependencies we install isolated from anything else on your computer.
+
+There's a helper script to run this. Just run:
+
+. activate-virtualenv
+
+Then, anything else you install with the python package manager "pip" will be kept in this folder, and only available when this virtual environment is active.

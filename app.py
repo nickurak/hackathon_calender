@@ -129,9 +129,10 @@ def update_home_tab(client, event, logger):
                     },
   ]
 
-   for reminder in get_reminders():
-      sections.append(
-                    {
+  for reminder in get_reminders():
+    
+    sections.append(
+                  {
                         "type": "section",
                         "text": {
                                 "text": {reminder.channel},
@@ -146,7 +147,7 @@ def update_home_tab(client, event, logger):
                             }
                         }
                     }
-      )
+    )
      
   sections.append(
                     {

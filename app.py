@@ -1,6 +1,7 @@
 import os
 import requests
 from datetime import datetime
+import json
 
 from calparsing import read_allcalendars
 
@@ -269,9 +270,27 @@ def update_home_tab(client, event, logger):
 def say_hello():
   url = 'https://slack.com/api/chat.postMessage'
   headers = {'Authorization': f'Bearer {os.environ.get("SLACK_BOT_TOKEN")}'}
+  blocks = [
+      {
+	  "type": "section",
+	  "text": {
+	      "type": "mrkdwn",
+	      "text": "*<Event Description>*\n<start_time>-<end_time>" + f'\nCurrent time:  {datetime.now().strftime("%H:%M:%S")}'
+	  },
+	  "accessory": {
+	      "type": "button",
+	      "action_id": "event_1_reminder",
+	      "text": {
+		  "text": "Learn More",
+		  "type": "plain_text"
+	      }
+	  }
+      }
+  ]
+
   payload = {
     'channel': 'C03486V8XKJ',
-    'text': f'from the api at {datetime.now().strftime("%H:%M:%S")}'
+    'blocks': json.dumps(blocks)
   }
   
   r =requests.post(url, headers=headers, data=payload)

@@ -129,11 +129,14 @@ def update_home_tab(client, event, logger):
                     },
   ]
 
-  sections.append(
+   for reminder in get_reminders():
+     
+  
+    sections.append(
                     {
                         "type": "section",
                         "text": {
-                                "text": "#channelA <calendar 1 name> Monday - Friday at 8:00 am",
+                                "text": {reminder.channel},
                                 "type": "mrkdwn"
                         },
                         "accessory": {
@@ -144,27 +147,14 @@ def update_home_tab(client, event, logger):
                                     "type": "plain_text"
                             }
                         }
-                    },
-                    {
-                        "type": "section",
-                        "text": {
-                                "text": "#channelA <calendar 1 name> Monday - Friday at 8:00 am",
-                                "type": "mrkdwn"
-                        },
-                        "accessory": {
-                            "type": "button",
-                            "action_id": "change_delivery_time",
-                            "text": {
-                                    "text": "Delete",
-                                    "type": "plain_text"
-                            }
-                        }
-                    },
+                    }
   )
   sections.append(
                     {
                         "type": "divider"
-                    },
+                    }
+  )
+  sections.append(
                     {
                         "type": "header",
                         "text": {
@@ -172,7 +162,9 @@ def update_home_tab(client, event, logger):
                                 "text": "Add a new calendar",
                                 "emoji": True
                         }
-                    },
+                    }
+  )
+  sections.append(
                     {
                         "type": "input",
                         "element": {
@@ -184,7 +176,9 @@ def update_home_tab(client, event, logger):
                             "text": "Name your calendar",
                             "emoji": False
                         }
-                    },
+                    }
+  )
+  sections.append(
                     {
                         "type": "input",
                         "element": {
@@ -196,7 +190,9 @@ def update_home_tab(client, event, logger):
                             "text": "URL",
                             "emoji": False
                         }
-                    },
+                    }
+  )
+  sections.append(
                     {
                         "type": "section",
                         "text": {
@@ -212,17 +208,23 @@ def update_home_tab(client, event, logger):
                             "value": "click_me_123",
                             "action_id": "button-action"
                         }
-                    },
+                    }
+  )
+  sections.append(
                     {
                         "type": "divider"
-                    },
+                    }
+  )
+  sections.append(
                     {
                         "type": "header",
                         "text": {
                                 "type": "plain_text",
                                 "text": "Registered calendars"
                         }
-                    },
+                    }
+  )
+  sections.append(
                     {
                         "type": "section",
                         "text": {
@@ -237,7 +239,9 @@ def update_home_tab(client, event, logger):
                                     "type": "plain_text"
                             }
                         }
-                    },
+                    }
+  )
+  sections.append(
                     {
                         "type": "section",
                         "text": {

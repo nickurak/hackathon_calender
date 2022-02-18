@@ -130,9 +130,7 @@ def update_home_tab(client, event, logger):
   ]
 
    for reminder in get_reminders():
-     
-  
-    sections.append(
+      sections.append(
                     {
                         "type": "section",
                         "text": {
@@ -148,7 +146,8 @@ def update_home_tab(client, event, logger):
                             }
                         }
                     }
-  )
+      )
+     
   sections.append(
                     {
                         "type": "divider"

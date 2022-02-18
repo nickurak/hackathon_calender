@@ -30,7 +30,7 @@ def update_home_tab(client, event, logger):
             "type": "section",
             "text": {
               "type": "mrkdwn",
-              "text": "Still works  New Paid Time Off request from <example.com|Fred Enriquez>\n\n<https://example.com|View request>"
+              "text": f"Time is {datetime.now().strftime('%H:%M:%S')}. Still works  New Paid Time Off request from <example.com|Fred Enriquez>\n\n<https://example.com|View request>"
             }
           }
         ]
@@ -65,8 +65,37 @@ def hello():
   return "good"
 
 
+# helpers
+def sayHello():
+  url = 'https://slack.com/api/chat.postMessage'
+  headers = {'Authorization': f'Bearer {os.environ.get("SLACK_BOT_TOKEN")}'}
+  payload = {
+    'channel': 'C03486V8XKJ',
+    'text': f'from the api at {datetime.now().strftime("%H:%M:%S")}'
+  }
+  
+  r =requests.post(url, headers=headers, data=payload)
+  # print(r.text)
+
+
+
+
+# internal "cron job" setup
+from threading import Thread
+import threading
+
+event = threading.Event()
+
+class cron(Thread):
+  def run(self):
+    while True:
+      sayHello()
+      event.wait(1)
+
 
 
 # Start your app
 if __name__ == "__main__":
-    app.run(port=int(os.environ.get("PORT", 3000)))
+  cron().start()
+  app.run(port=int(os.environ.get("PORT", 3000)))
+    

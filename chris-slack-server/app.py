@@ -1,14 +1,17 @@
 import os
-# Use the package we installed
+import requests
+from flask import Flask, request
 from slack_bolt import App
+from slack_bolt.adapter.flask import SlackRequestHandler
 
-# Initializes your app with your bot token and signing secret
-app = App(
+app = Flask(__name__)
+
+bolt_app = App(
     token=os.environ.get("SLACK_BOT_TOKEN"),
     signing_secret=os.environ.get("SLACK_SIGNING_SECRET")
 )
 
-@app.event("app_home_opened")
+@bolt_app.event("app_home_opened")
 def update_home_tab(client, event, logger):
   try:
     # views.publish is the method that your app uses to push a view to the Home tab
@@ -26,30 +29,8 @@ def update_home_tab(client, event, logger):
             "type": "section",
             "text": {
               "type": "mrkdwn",
-              "text": "*Welcome to whatever _App's Home_* :tada:"
+              "text": "Still works  New Paid Time Off request from <example.com|Fred Enriquez>\n\n<https://example.com|View request>"
             }
-          },
-          {
-            "type": "divider"
-          },
-          {
-            "type": "section",
-            "text": {
-              "type": "mrkdwn",
-              "text": "This button won't do much for now but you can set up a listener for it using the `actions()` method and passing its unique `action_id`. See an example in the `examples` folder within your Bolt app."
-            }
-          },
-          {
-            "type": "actions",
-            "elements": [
-              {
-                "type": "button",
-                "text": {
-                  "type": "plain_text",
-                  "text": "Click me!",
-                }
-              }
-            ]
           }
         ]
       }
@@ -59,6 +40,31 @@ def update_home_tab(client, event, logger):
     logger.error(f"Error publishing home tab: {e}")
 
 
+
+handler = SlackRequestHandler(bolt_app)
+
+@app.route("/slack/events", methods=["POST"])
+def slack_events():
+    """ Declaring the route where slack will post a request and dispatch method of App """
+    return handler.handle(request)
+
+
+@app.route("/hello", methods=["POST"])
+def hello():
+  url = 'https://slack.com/api/chat.postMessage'
+  headers = {'Authorization': 'Bearer xoxb-3104380765749-3122787789140-dIIc9gXtvzz7cdiJeUaRx16V'}
+  payload = {
+    'channel': 'C03486V8XKJ',
+    'text': 'from the api'
+  }
+
+  r =requests.post(url, headers=headers, data=payload)
+  print(r.text)
+  return "good"
+
+
+
+
 # Start your app
 if __name__ == "__main__":
-    app.start(port=int(os.environ.get("PORT", 3000)))
+    app.run(port=int(os.environ.get("PORT", 3000)))

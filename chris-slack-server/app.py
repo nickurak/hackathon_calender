@@ -1,5 +1,6 @@
 import os
 import requests
+from datetime import datetime
 from flask import Flask, request
 from slack_bolt import App
 from slack_bolt.adapter.flask import SlackRequestHandler
@@ -52,14 +53,15 @@ def slack_events():
 @app.route("/hello", methods=["POST"])
 def hello():
   url = 'https://slack.com/api/chat.postMessage'
-  headers = {'Authorization': 'Bearer xoxb-3104380765749-3122787789140-dIIc9gXtvzz7cdiJeUaRx16V'}
+  headers = {'Authorization': f'Bearer {os.environ.get("SLACK_BOT_TOKEN")}'}
   payload = {
     'channel': 'C03486V8XKJ',
-    'text': 'from the api'
+    'text': f'from the api at {datetime.now().strftime("%H:%M:%S")}'
   }
-
+  
   r =requests.post(url, headers=headers, data=payload)
   print(r.text)
+  
   return "good"
 
 

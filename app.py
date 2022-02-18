@@ -1,8 +1,11 @@
 import os
 import requests
 from datetime import datetime
+import json
 
 from calparsing import read_allcalendars
+
+import db
 
 from periodic import periodic
 
@@ -267,19 +270,50 @@ def update_home_tab(client, event, logger):
 # helpers
 @periodic(5*60)
 def say_hello():
+  allEvents = db.get_events()
+  
+  blocks = []
+
+  for e in allEvents:
+    eventName = e['event_name']
+    eventStartDate = datetime.utcfromtimestamp(e['start_time']).strftime('%Y-%m-%d %-I:%M:%S %p %Z')
+    eventEndDate = datetime.utcfromtimestamp(e['end_time']).strftime('%Y-%m-%d %-I:%M:%S %p %Z')
+
+    blocks += [
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": f"Event Name: *{eventName}*\n {eventStartDate} - {eventEndDate}"
+			  },
+        "accessory": {
+          "type": "button",
+          "action_id": "event_1_reminder",
+          "text": {
+            "type": "plain_text",
+            "text": "Learn More"
+          }
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ]
+
   url = 'https://slack.com/api/chat.postMessage'
   headers = {'Authorization': f'Bearer {os.environ.get("SLACK_BOT_TOKEN")}'}
   payload = {
     'channel': 'C03486V8XKJ',
-    'text': f'from the api at {datetime.now().strftime("%H:%M:%S")}'
+    'blocks': json.dumps(blocks)
   }
   
   r =requests.post(url, headers=headers, data=payload)
-  # print(r.text)
+
 
 @periodic(10*60)
 def refresh_calendars():
     read_allcalendars()
+
 
 # internal "cron job" setup
 from threading import Thread

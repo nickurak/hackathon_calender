@@ -5,7 +5,7 @@ import getopt
 #slack api
 def send_slack_msg(message):
   payload = '{"text": "%s"}' % message
-  response = requests.post('https://hooks.slack.com/services/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',
+  response = requests.post('https://hooks.slack.com/services/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',
   data = payload)
   print(response.text)
 def main(argv):

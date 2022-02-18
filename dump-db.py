@@ -5,11 +5,14 @@ from datetime import datetime
 from db import get_events, get_calendars, get_reminders
 
 def main():
+    print("Calendars:")
     for calendar in get_calendars():
         name = calendar['name']
         url = calendar['url']
         print(f"Calendar '{calendar}' is at url '{url}'")
 
+    print()
+    print("Events:")
     for event in get_events():
         uid = event['uid']
         name = event['event_name']
@@ -18,6 +21,8 @@ def main():
         calendar = event['calendar']
         print(f"Event {name} from calendar {calendar} (with uid \"{uid}\" ), starts at {start_time} and goes until {end_time}")
 
+    print()
+    print("Reminders:")
     for reminder in get_reminders():
         calendar = reminder['calendar']
         time = reminder['time']

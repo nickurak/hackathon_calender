@@ -37,7 +37,7 @@ def read_calendar(cname):
 
 
 def main():
-  read_calendar('hackathon test calendar')
+  read_allcalendars()
 
 if __name__ == '__main__':
     main()

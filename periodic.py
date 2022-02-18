@@ -5,7 +5,10 @@ def periodic(interval):
         def wrapper(*args, **kwargs):
             if not hasattr(f, "last_run") or (time.time() - f.last_run) > interval:
                 f.last_run = time.time()
-                return f(*args, **kwargs)
+                print(f"Running {f.__name__}")
+                rv = f(*args, **kwargs)
+                print(f"Done running {f.__name__}")
+                return rv
             return None
         return wrapper
     return decorator

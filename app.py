@@ -255,24 +255,24 @@ def update_home_tab(client, event, logger):
                     }
   )
   
-    try:
-        # views.publish is the method that your app uses to push a view to the Home tab
-        client.views_publish(
-            # the user that opened your app's app home
-            user_id=event["user"],
-            # the view object that appears in the app home
-            view={
-                "type": "home",
-                "callback_id": "home_view",
+  try:
+    # views.publish is the method that your app uses to push a view to the Home tab
+    client.views_publish(
+        # the user that opened your app's app home
+        user_id=event["user"],
+        # the view object that appears in the app home
+        view={
+            "type": "home",
+            "callback_id": "home_view",
 
 
-                "blocks": sections
+            "blocks": sections
 
-            }
-        )
+        }
+    )
 
-    except Exception as e:
-        logger.error(f"Error publishing home tab: {e}")
+  except Exception as e:
+    logger.error(f"Error publishing home tab: {e}")
 
 
 # Start your app

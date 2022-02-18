@@ -264,9 +264,16 @@ def update_home_tab(client, event, logger):
     except Exception as e:
         logger.error(f"Error publishing home tab: {e}")
 
+@app.event("message")
+def handle_message_events(client, event, logger):
+    if (event["channel_type"] == "channel" or event["channel_type"] == "im") and event["text"] == "calendar":
+        say_hello()
 
 # helpers
 @periodic(5*60)
+def say_hello_periodic():
+    say_hello()
+
 def say_hello():
   url = 'https://slack.com/api/chat.postMessage'
   headers = {'Authorization': f'Bearer {os.environ.get("SLACK_BOT_TOKEN")}'}
@@ -292,9 +299,9 @@ def say_hello():
     'channel': 'C03486V8XKJ',
     'blocks': json.dumps(blocks)
   }
-  
+
   r =requests.post(url, headers=headers, data=payload)
-  # print(r.text)
+#   print(r.text)
 
 @periodic(10*60)
 def refresh_calendars():
@@ -308,7 +315,7 @@ event = threading.Event()
 class cron(Thread):
   def run(self):
     while True:
-      say_hello()
+      say_hello_periodic()
       refresh_calendars()
 
       event.wait(1)
@@ -318,4 +325,4 @@ class cron(Thread):
 # Start your app
 if __name__ == "__main__":
   cron().start()
-  app.start(port=int(os.environ.get("PORT", 3000)))    
+  app.start(port=int(os.environ.get("PORT", 3000)))

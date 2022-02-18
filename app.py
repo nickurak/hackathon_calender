@@ -264,7 +264,7 @@ def update_home_tab(client, event, logger):
 
 # helpers
 @periodic(5*60)
-def sayHello():
+def say_hello():
   url = 'https://slack.com/api/chat.postMessage'
   headers = {'Authorization': f'Bearer {os.environ.get("SLACK_BOT_TOKEN")}'}
   payload = {
@@ -285,7 +285,7 @@ event = threading.Event()
 class cron(Thread):
   def run(self):
     while True:
-      sayHello()
+      say_hello()
       event.wait(1)
 
 

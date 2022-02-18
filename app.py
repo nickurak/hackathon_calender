@@ -1,6 +1,9 @@
 import os
 import requests
 from datetime import datetime
+
+from periodic import periodic
+
 from slack_bolt import App
 app = App(
     token=os.environ.get("SLACK_BOT_TOKEN"),
@@ -260,6 +263,7 @@ def update_home_tab(client, event, logger):
 
 
 # helpers
+@periodic(5*60)
 def sayHello():
   url = 'https://slack.com/api/chat.postMessage'
   headers = {'Authorization': f'Bearer {os.environ.get("SLACK_BOT_TOKEN")}'}

@@ -1,2 +1,6 @@
-# directories to ignore
+# files/directories to ignore
 /chris-slack-server/.venv
+/__pycache__
+calendars.json
+events.json
+reminders.json

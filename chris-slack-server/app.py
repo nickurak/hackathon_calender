@@ -1,18 +1,13 @@
 import os
 import requests
 from datetime import datetime
-from flask import Flask, request
 from slack_bolt import App
-from slack_bolt.adapter.flask import SlackRequestHandler
-
-app = Flask(__name__)
-
-bolt_app = App(
+app = App(
     token=os.environ.get("SLACK_BOT_TOKEN"),
     signing_secret=os.environ.get("SLACK_SIGNING_SECRET")
 )
 
-@bolt_app.event("app_home_opened")
+@app.event("app_home_opened")
 def update_home_tab(client, event, logger):
   try:
     # views.publish is the method that your app uses to push a view to the Home tab
@@ -42,29 +37,6 @@ def update_home_tab(client, event, logger):
 
 
 
-handler = SlackRequestHandler(bolt_app)
-
-@app.route("/slack/events", methods=["POST"])
-def slack_events():
-    """ Declaring the route where slack will post a request and dispatch method of App """
-    return handler.handle(request)
-
-
-@app.route("/hello", methods=["POST"])
-def hello():
-  url = 'https://slack.com/api/chat.postMessage'
-  headers = {'Authorization': f'Bearer {os.environ.get("SLACK_BOT_TOKEN")}'}
-  payload = {
-    'channel': 'C03486V8XKJ',
-    'text': f'from the api at {datetime.now().strftime("%H:%M:%S")}'
-  }
-  
-  r =requests.post(url, headers=headers, data=payload)
-  print(r.text)
-  
-  return "good"
-
-
 # helpers
 def sayHello():
   url = 'https://slack.com/api/chat.postMessage'
@@ -79,13 +51,11 @@ def sayHello():
 
 
 
-
 # internal "cron job" setup
 from threading import Thread
 import threading
 
 event = threading.Event()
-
 class cron(Thread):
   def run(self):
     while True:
@@ -97,5 +67,4 @@ class cron(Thread):
 # Start your app
 if __name__ == "__main__":
   cron().start()
-  app.run(port=int(os.environ.get("PORT", 3000)))
-    
+  app.start(port=int(os.environ.get("PORT", 3000)))    

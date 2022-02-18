@@ -1,3 +1,2 @@
-  # exclude everything except directory foo/bar
+# directories to ignore
 /chris-slack-server/.venv
-/chris-slack-server/_cron.sh

@@ -3,9 +3,7 @@ from icalendar import Calendar, Event
 from db import get_calendars, write_events
 from datetime import timezone
 
-events = []
-
-def read_calender_events(calendar):
+def read_calender_events(calendar, events):
     r = requests.get(url = calendar['url'])
 
     gcal = Calendar.from_ical(r.text)
@@ -22,8 +20,9 @@ def read_calender_events(calendar):
 
 
 def read_allcalendars():
+    events = []
     for calendar in get_calendars():
-        read_calender_events(calendar)
+        read_calender_events(calendar, events)
 
     write_events(events)
 

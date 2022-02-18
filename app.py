@@ -2,6 +2,8 @@ import os
 import requests
 from datetime import datetime
 
+from calparsing import read_allcalendars
+
 from periodic import periodic
 
 from slack_bolt import App
@@ -275,7 +277,9 @@ def say_hello():
   r =requests.post(url, headers=headers, data=payload)
   # print(r.text)
 
-
+@periodic(10*60)
+def refresh_calendars():
+    read_allcalendars()
 
 # internal "cron job" setup
 from threading import Thread
@@ -286,6 +290,8 @@ class cron(Thread):
   def run(self):
     while True:
       say_hello()
+      refresh_calendars()
+
       event.wait(1)
 
 

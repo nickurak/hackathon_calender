@@ -135,7 +135,7 @@ def update_home_tab(client, event, logger):
                   {
                         "type": "section",
                         "text": {
-                                "text": {reminder.channel},
+                                "text": {reminder['channel']},
                                 "type": "mrkdwn"
                         },
                         "accessory": {
